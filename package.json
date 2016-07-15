@@ -1,0 +1,43 @@
+{
+  "name": "@joegesualdo/react-draggable",
+  "version": "0.0.1",
+  "description": "Make elements draggable.",
+  "repository": "joegesualdo/react-draggable",
+  "main": "./dist/index.js",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "./node_modules/distify-cli/cli.js --input-file=./index.jsx --output-dir=./dist --is-react --is-module",
+    "dev-server": "./node_modules/@joegesualdo/react-server-cli/cli.js --entry=./index.jsx --output=assets/bundle.js",
+    "server": "./node_modules/@joegesualdo/react-server-cli/cli.js --entry=./dist/index.js --output=assets/bundle.js"
+  },
+  "keywords": [
+    "drag",
+    "drop",
+    "react",
+    "draggable"
+  ],
+  "author": {
+    "name": "Joe Gesualdo",
+    "email": "joegesualdo@gmail.com",
+    "url": ""
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "distify-cli": "0.0.13",
+    "react-addons-test-utils": "^15.1.0",
+    "@joegesualdo/react-server-cli": "0.0.2",
+    "enzyme": "^2.3.0",
+    "@joegesualdo/ava-react": "^0.0.4"
+  },
+  "dependencies": {
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0"
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  }
+}
