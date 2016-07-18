@@ -6,7 +6,7 @@ import { shallow } from 'enzyme';
 
 test('root tag is an input', t => {
   const wrapper = shallow(<TestComponent />);
-  t.is(wrapper.type(), 'span');
+  t.is(wrapper.type(), 'div');
 });
 
 test('root class is applied', t => {

@@ -18,7 +18,7 @@ const defaultProps = {
   onStart: function(){ },
 };
 
-class TestComponent extends React.Component {
+class Draggable extends React.Component {
   constructor(props) {
     super(props);
 
@@ -36,8 +36,12 @@ class TestComponent extends React.Component {
     const childRect = childNode.getBoundingClientRect();
     parentNode.style.position = 'relative'
     parentNode.addEventListener("mousemove", (e) => {
-      e.preventDefault();
-      this.onMouseMove(e)
+      if (this.state.dragging) {
+        e.preventDefault();
+        let x = (e.pageX - this.state.buffer.x)
+        let y = (e.pageY - this.state.buffer.y)
+        this.onMouseMove({x: x, y: y})
+      }
     });
     parentNode.addEventListener("mouseleave", (e) => {
       e.preventDefault();
@@ -82,13 +86,11 @@ class TestComponent extends React.Component {
     })
   }
 
-  onMouseMove = (e) => {
+  onMouseMove = (cords) => {
     if (this.state.dragging) {
       const axis = this.props.axis;
-      let x = (e.pageX - this.state.buffer.x)
-      let y = (e.pageY - this.state.buffer.y)
-      console.log(x)
-      console.log(y)
+      let x = cords.x
+      let y = cords.y
       if (x < 0) {
         x = 0;
       } else if (x > (this.state.parentPosition.width - this.state.width)){
@@ -105,8 +107,6 @@ class TestComponent extends React.Component {
       if (axis === 'y') {
         x = this.state.position.x
       }
-      console.log(x)
-      console.log(y)
       this.setState({
         position: {
           x: x,
@@ -139,7 +139,7 @@ class TestComponent extends React.Component {
   }
 }
 
-TestComponent.propTypes = propTypes;
-TestComponent.defaultProps = defaultProps;
+Draggable.propTypes = propTypes;
+Draggable.defaultProps = defaultProps;
 
-export default TestComponent;
+export default Draggable;
