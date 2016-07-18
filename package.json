@@ -7,8 +7,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "./node_modules/distify-cli/cli.js --input-file=./index.jsx --output-dir=./dist --is-react --is-module",
-    "dev-server": "./node_modules/@joegesualdo/react-server-cli/cli.js --entry=./index.jsx --output=assets/bundle.js",
-    "server": "./node_modules/@joegesualdo/react-server-cli/cli.js --entry=./dist/index.js --output=assets/bundle.js"
+    "dev-server": "./node_modules/@joegesualdo/react-server-cli/cli.js --entry=./examples/entry.js --output=assets/bundle.js"
   },
   "keywords": [
     "drag",
