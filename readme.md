@@ -6,7 +6,7 @@
 $ npm install --save @joegesualdo/react-draggable
 ```
 
-![react-draggable-demo](https://raw.github.com/joegesualdo/react-draggable/master/demo.gif)
+![react-draggable-demo](https://github.com/joegesualdo/react-draggable/raw/master/demo.gif)
 
 ## Usage
 ```javascript
