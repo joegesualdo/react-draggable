@@ -3,24 +3,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 ReactDOM.render(
-  <div style={{margin: 400}}>
-    <div style={{width: 1000, height: 1000, backgroundColor: 'gray'}}>
-      <Draggable axis='both' onDrag={function(e){console.log(e)}} onStart={function(){console.log('started')}} onStop={function(){console.log('stopped')}}>
-        <div style={{backgroundColor: 'blue', width: 100, height: 60}}></div></Draggable>
-      <div
-        style={
-          {
-            width: '100%',
-            height: 5,
-            backgroundColor: 'red',
-            position: 'relative',
-            top: '50%',
-            transform: 'translateY(-50%)',
-          }
+  <div style={{width: 1000, height: 500, border: 'solid 1px black', backgroundColor: '#303030'}}>
+    <Draggable axis='both' onDrag={function(e){console.log(e)}} onStart={function(){console.log('started')}} onStop={function(){console.log('stopped')}}>
+      <div style={
+        {
+          backgroundImage: 'url(http://benchmarkitconsulting.com/wp-content/uploads/2013/02/AngryCat-266x300.jpg)',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: '50%',
+          borderRadius: '50%',
+          border: 'white 2px solid',
+          width: '250px',
+          height: '250px',
         }
-      >
-      </div>
-    </div>
+      }></div>
+    </Draggable>
   </div>,
   document.querySelector('#app')
 );

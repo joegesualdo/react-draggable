@@ -6,6 +6,8 @@
 $ npm install --save @joegesualdo/react-draggable
 ```
 
+![react-draggable-demo](https://raw.github.com/joegesualdo/react-draggable/master/demo.gif)
+
 ## Usage
 ```javascript
 import Draggable from '@joegesualdo/react-draggable';

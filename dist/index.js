@@ -73,40 +73,160 @@ module.exports =
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var propTypes = {};
+	var propTypes = {
+	  defaultPostition: _react2.default.PropTypes.object,
+	  axis: _react2.default.PropTypes.string,
+	  onDrag: _react2.default.PropTypes.func,
+	  onStart: _react2.default.PropTypes.func,
+	  onStop: _react2.default.PropTypes.func
+	};
 
-	var defaultProps = {};
+	var defaultProps = {
+	  defaultPosition: { x: 0, y: 0 },
+	  axis: 'both',
+	  onDrag: function onDrag() {},
+	  onStop: function onStop() {},
+	  onStart: function onStart() {}
+	};
 
-	var TestComponent = function (_React$Component) {
-	  _inherits(TestComponent, _React$Component);
+	var Draggable = function (_React$Component) {
+	  _inherits(Draggable, _React$Component);
 
-	  function TestComponent(props) {
-	    _classCallCheck(this, TestComponent);
+	  function Draggable(props) {
+	    _classCallCheck(this, Draggable);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TestComponent).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Draggable).call(this, props));
 
-	    _this.state = {};
+	    _this.onMouseLeave = function () {
+	      _this.setState({
+	        dragging: false
+	      });
+	    };
+
+	    _this.onMouseDown = function (e) {
+	      e.preventDefault();
+	      _this.setState({
+	        dragging: true,
+	        buffer: {
+	          x: e.pageX - _this.state.position.x,
+	          y: e.pageY - _this.state.position.y
+	        }
+	      }, function () {
+	        _this.props.onStart(_this.state.position);
+	      });
+	    };
+
+	    _this.onMouseUp = function (e) {
+	      _this.setState({
+	        dragging: false
+	      }, function () {
+	        _this.props.onStop(_this.state.position);
+	      });
+	    };
+
+	    _this.onMouseMove = function (cords) {
+	      if (_this.state.dragging) {
+	        var axis = _this.props.axis;
+	        var x = cords.x;
+	        var y = cords.y;
+	        if (x < 0) {
+	          x = 0;
+	        } else if (x > _this.state.parentPosition.width - _this.state.width) {
+	          x = _this.state.parentPosition.width - _this.state.width;
+	        }
+	        if (y < 0) {
+	          y = 0;
+	        } else if (y > _this.state.parentPosition.height - _this.state.height) {
+	          y = _this.state.parentPosition.height - _this.state.height;
+	        }
+	        if (axis === 'x') {
+	          y = _this.state.position.y;
+	        }
+	        if (axis === 'y') {
+	          x = _this.state.position.x;
+	        }
+	        _this.setState({
+	          position: {
+	            x: x,
+	            y: y
+	          }
+	        }, function () {
+	          _this.props.onDrag(_this.state.position);
+	        });
+	      }
+	    };
+
+	    _this.state = {
+	      position: props.defaultPosition,
+	      dragging: false
+	    };
 	    return _this;
 	  }
 
-	  _createClass(TestComponent, [{
+	  _createClass(Draggable, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      var parentNode = _reactDom2.default.findDOMNode(this).parentNode;
+	      // This is how we later access the dom element of the children: http://stackoverflow.com/questions/29568721/getting-dom-node-from-react-child-element
+	      var childNode = _reactDom2.default.findDOMNode(this.refs['child-0']);
+	      var parentRect = parentNode.getBoundingClientRect();
+	      var childRect = childNode.getBoundingClientRect();
+	      parentNode.style.position = 'relative';
+	      parentNode.addEventListener("mousemove", function (e) {
+	        if (_this2.state.dragging) {
+	          e.preventDefault();
+	          var x = e.pageX - _this2.state.buffer.x;
+	          var y = e.pageY - _this2.state.buffer.y;
+	          _this2.onMouseMove({ x: x, y: y });
+	        }
+	      });
+	      parentNode.addEventListener("mouseleave", function (e) {
+	        e.preventDefault();
+	        _this2.onMouseLeave(e);
+	      });
+
+	      this.setState({
+	        parentPosition: {
+	          x: parentRect.left,
+	          y: parentRect.top,
+	          width: parentRect.width,
+	          height: parentRect.height
+	        },
+	        width: childRect.width,
+	        height: childRect.height
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var inlineStyles = {
+	        left: this.state.position.x,
+	        top: this.state.position.y
+	      };
 	      return _react2.default.createElement(
-	        'span',
-	        { className: _index2.default.root },
-	        'Meow'
+	        'div',
+	        {
+	          onMouseDown: this.onMouseDown,
+	          onMouseUp: this.onMouseUp,
+	          style: inlineStyles,
+	          className: _index2.default.root
+	        },
+	        _react2.default.Children.map(this.props.children, function (element, idx) {
+	          return _react2.default.cloneElement(element, { ref: 'child-' + idx });
+	        })
 	      );
 	    }
 	  }]);
 
-	  return TestComponent;
+	  return Draggable;
 	}(_react2.default.Component);
 
-	TestComponent.propTypes = propTypes;
-	TestComponent.defaultProps = defaultProps;
+	Draggable.propTypes = propTypes;
+	Draggable.defaultProps = defaultProps;
 
-	exports.default = TestComponent;
+	exports.default = Draggable;
 
 /***/ },
 /* 1 */
@@ -21175,7 +21295,7 @@ module.exports =
 
 
 	// module
-	exports.push([module.id, ".index__root___1g6PR {\n  /* */\n}\n", "", {"version":3,"sources":["/./index.css"],"names":[],"mappings":"AAAA;EACE,KAAK;CACN","file":"index.css","sourcesContent":[".root {\n  /* */\n}\n"],"sourceRoot":"webpack://"}]);
+	exports.push([module.id, ".index__root___1g6PR {\n  cursor: pointer;\n  position: absolute;\n}\n", "", {"version":3,"sources":["/./index.css"],"names":[],"mappings":"AAAA;EACE,gBAAgB;EAChB,mBAAmB;CACpB","file":"index.css","sourcesContent":[".root {\n  cursor: pointer;\n  position: absolute;\n}\n"],"sourceRoot":"webpack://"}]);
 
 	// exports
 	exports.locals = {
