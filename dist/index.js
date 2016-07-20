@@ -132,6 +132,7 @@ module.exports =
 	        if (x < 0) {
 	          x = 0;
 	        } else if (x > _this.state.parentPosition.width - _this.state.width) {
+	          debugger;
 	          x = _this.state.parentPosition.width - _this.state.width;
 	        }
 	        if (y < 0) {
@@ -168,19 +169,13 @@ module.exports =
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      console.log('mouted');
 	      var parentNode = _reactDom2.default.findDOMNode(this).parentNode;
 	      // This is how we later access the dom element of the children: http://stackoverflow.com/questions/29568721/getting-dom-node-from-react-child-element
 	      var childNode = parentNode.childNodes[0];
 	      var parentRect = parentNode.getBoundingClientRect();
 	      var childRect = childNode.getBoundingClientRect();
 	      parentNode.style.position = 'relative';
-	      console.log(parentNode);
-	      window.document.addEventListener("mousemove", function (e) {
-	        console.log('move document');
-	      });
 	      parentNode.addEventListener("mousemove", function (e) {
-	        console.log('move');
 	        if (_this2.state.dragging) {
 	          e.preventDefault();
 	          var x = e.pageX - _this2.state.buffer.x;
@@ -209,7 +204,8 @@ module.exports =
 	    value: function render() {
 	      var inlineStyles = {
 	        left: this.state.position.x,
-	        top: this.state.position.y
+	        top: this.state.position.y,
+	        position: 'absolute'
 	      };
 	      return _react2.default.createElement(
 	        'div',

@@ -94,7 +94,6 @@ class Draggable extends React.Component {
       if (x < 0) {
         x = 0;
       } else if (x > (this.state.parentPosition.width - this.state.width)){
-        debugger
         x = this.state.parentPosition.width - this.state.width
       }
       if (y < 0) {
