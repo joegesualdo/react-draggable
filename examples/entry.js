@@ -1,3 +1,4 @@
+// import Draggable from './../dist/index.js';
 import Draggable from './../index.jsx';
 import React from 'react';
 import ReactDOM from 'react-dom';

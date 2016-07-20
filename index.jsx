@@ -31,7 +31,7 @@ class Draggable extends React.Component {
   componentDidMount() {
     const parentNode = ReactDOM.findDOMNode(this).parentNode
     // This is how we later access the dom element of the children: http://stackoverflow.com/questions/29568721/getting-dom-node-from-react-child-element
-    const childNode = ReactDOM.findDOMNode(this.refs['child-0'])
+    const childNode = parentNode.childNodes[0]
     const parentRect = parentNode.getBoundingClientRect();
     const childRect = childNode.getBoundingClientRect();
     parentNode.style.position = 'relative'
@@ -94,6 +94,7 @@ class Draggable extends React.Component {
       if (x < 0) {
         x = 0;
       } else if (x > (this.state.parentPosition.width - this.state.width)){
+        debugger
         x = this.state.parentPosition.width - this.state.width
       }
       if (y < 0) {
@@ -122,6 +123,7 @@ class Draggable extends React.Component {
     let inlineStyles = {
       left: this.state.position.x,
       top: this.state.position.y,
+      position: 'absolute'
     }
     return (
       <div
@@ -131,9 +133,12 @@ class Draggable extends React.Component {
         className={style.root}
       >
       {/*This is how we later access the dom element of the children: http://stackoverflow.com/questions/29568721/getting-dom-node-from-react-child-element*/}
+      {this.props.children}
+      {/*}
       {React.Children.map(this.props.children, (element, idx) => {
         return React.cloneElement(element, { ref: `child-${idx}`});
       })}
+      */}
       </div>
     );
   }

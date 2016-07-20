@@ -168,13 +168,19 @@ module.exports =
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
+	      console.log('mouted');
 	      var parentNode = _reactDom2.default.findDOMNode(this).parentNode;
 	      // This is how we later access the dom element of the children: http://stackoverflow.com/questions/29568721/getting-dom-node-from-react-child-element
-	      var childNode = _reactDom2.default.findDOMNode(this.refs['child-0']);
+	      var childNode = parentNode.childNodes[0];
 	      var parentRect = parentNode.getBoundingClientRect();
 	      var childRect = childNode.getBoundingClientRect();
 	      parentNode.style.position = 'relative';
+	      console.log(parentNode);
+	      window.document.addEventListener("mousemove", function (e) {
+	        console.log('move document');
+	      });
 	      parentNode.addEventListener("mousemove", function (e) {
+	        console.log('move');
 	        if (_this2.state.dragging) {
 	          e.preventDefault();
 	          var x = e.pageX - _this2.state.buffer.x;
@@ -213,9 +219,7 @@ module.exports =
 	          style: inlineStyles,
 	          className: _index2.default.root
 	        },
-	        _react2.default.Children.map(this.props.children, function (element, idx) {
-	          return _react2.default.cloneElement(element, { ref: 'child-' + idx });
-	        })
+	        this.props.children
 	      );
 	    }
 	  }]);
