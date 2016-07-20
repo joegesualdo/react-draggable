@@ -1,6 +1,6 @@
 {
   "name": "@joegesualdo/react-draggable",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Make elements draggable.",
   "repository": "joegesualdo/react-draggable",
   "main": "./dist/index.js",

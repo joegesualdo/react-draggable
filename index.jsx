@@ -29,9 +29,10 @@ class Draggable extends React.Component {
   }
 
   componentDidMount() {
-    const parentNode = ReactDOM.findDOMNode(this).parentNode
+    const node = ReactDOM.findDOMNode(this)
+    const parentNode = node.parentNode
     // This is how we later access the dom element of the children: http://stackoverflow.com/questions/29568721/getting-dom-node-from-react-child-element
-    const childNode = parentNode.childNodes[0]
+    const childNode = node.childNodes[0]
     const parentRect = parentNode.getBoundingClientRect();
     const childRect = childNode.getBoundingClientRect();
     parentNode.style.position = 'relative'

@@ -132,7 +132,6 @@ module.exports =
 	        if (x < 0) {
 	          x = 0;
 	        } else if (x > _this.state.parentPosition.width - _this.state.width) {
-	          debugger;
 	          x = _this.state.parentPosition.width - _this.state.width;
 	        }
 	        if (y < 0) {
