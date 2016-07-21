@@ -75,6 +75,7 @@ module.exports =
 
 	var propTypes = {
 	  defaultPostition: _react2.default.PropTypes.object,
+	  postion: _react2.default.PropTypes.object,
 	  axis: _react2.default.PropTypes.string,
 	  onDrag: _react2.default.PropTypes.func,
 	  onStart: _react2.default.PropTypes.func,
@@ -82,7 +83,6 @@ module.exports =
 	};
 
 	var defaultProps = {
-	  defaultPosition: { x: 0, y: 0 },
 	  axis: 'both',
 	  onDrag: function onDrag() {},
 	  onStop: function onStop() {},
@@ -145,19 +145,21 @@ module.exports =
 	        if (axis === 'y') {
 	          x = _this.state.position.x;
 	        }
-	        _this.setState({
-	          position: {
-	            x: x,
-	            y: y
-	          }
-	        }, function () {
-	          _this.props.onDrag(_this.state.position);
-	        });
+
+	        _this.props.onDrag({ x: x, y: y });
+	        // this.setState({
+	        //   position: {
+	        //     x: x,
+	        //     y: y
+	        //   }
+	        // }, () => {
+	        //   this.props.onDrag(this.state.position)
+	        // })
 	      }
 	    };
 
 	    _this.state = {
-	      position: props.defaultPosition,
+	      position: props.position,
 	      dragging: false
 	    };
 	    return _this;
@@ -168,9 +170,10 @@ module.exports =
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      var parentNode = _reactDom2.default.findDOMNode(this).parentNode;
+	      var node = _reactDom2.default.findDOMNode(this);
+	      var parentNode = node.parentNode;
 	      // This is how we later access the dom element of the children: http://stackoverflow.com/questions/29568721/getting-dom-node-from-react-child-element
-	      var childNode = parentNode.childNodes[0];
+	      var childNode = node.childNodes[0];
 	      var parentRect = parentNode.getBoundingClientRect();
 	      var childRect = childNode.getBoundingClientRect();
 	      parentNode.style.position = 'relative';

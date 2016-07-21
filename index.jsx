@@ -4,6 +4,7 @@ import style from './index.css';
 
 const propTypes = {
   defaultPostition: React.PropTypes.object,
+  postion: React.PropTypes.object,
   axis: React.PropTypes.string,
   onDrag: React.PropTypes.func,
   onStart: React.PropTypes.func,
@@ -11,7 +12,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  defaultPosition: { x: 0, y: 0 },
   axis: 'both',
   onDrag: function(){ },
   onStop: function(){ },
@@ -23,7 +23,7 @@ class Draggable extends React.Component {
     super(props);
 
     this.state = {
-      position: props.defaultPosition,
+      position: props.position,
       dragging: false,
     };
   }
@@ -108,14 +108,16 @@ class Draggable extends React.Component {
       if (axis === 'y') {
         x = this.state.position.x
       }
-      this.setState({
-        position: {
-          x: x,
-          y: y
-        }
-      }, () => {
-        this.props.onDrag(this.state.position)
-      })
+
+      this.props.onDrag({x: x, y: y})
+      // this.setState({
+      //   position: {
+      //     x: x,
+      //     y: y
+      //   }
+      // }, () => {
+      //   this.props.onDrag(this.state.position)
+      // })
     }
   }
 
