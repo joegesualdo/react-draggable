@@ -23,7 +23,6 @@ class Draggable extends React.Component {
     super(props);
 
     this.state = {
-      position: props.position,
       dragging: false,
     };
   }
@@ -71,11 +70,11 @@ class Draggable extends React.Component {
     this.setState({
       dragging: true,
       buffer: {
-        x: (e.pageX - this.state.position.x),
-        y: (e.pageY - this.state.position.y),
+        x: (e.pageX - this.props.position.x),
+        y: (e.pageY - this.props.position.y),
       }
     }, () => {
-      this.props.onStart(this.state.position)
+      this.props.onStart(this.props.position)
     })
   }
 
@@ -83,7 +82,7 @@ class Draggable extends React.Component {
     this.setState({
       dragging: false,
     }, () => {
-      this.props.onStop(this.state.position)
+      this.props.onStop(this.props.position)
     })
   }
 
@@ -103,10 +102,10 @@ class Draggable extends React.Component {
         y = this.state.parentPosition.height- this.state.height
       }
       if (axis === 'x') {
-        y = this.state.position.y
+        y = this.props.position.y
       }
       if (axis === 'y') {
-        x = this.state.position.x
+        x = this.props.position.x
       }
 
       this.props.onDrag({x: x, y: y})
@@ -123,8 +122,8 @@ class Draggable extends React.Component {
 
   render() {
     let inlineStyles = {
-      left: this.state.position.x,
-      top: this.state.position.y,
+      left: this.props.position.x,
+      top: this.props.position.y,
       position: 'absolute'
     }
     return (
